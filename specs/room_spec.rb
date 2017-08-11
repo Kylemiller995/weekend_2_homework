@@ -38,9 +38,14 @@ class RoomSpec < MiniTest::Test
     assert_equal("room is full", @room.check_in(@guest2) )
   end
 
-  def test_entry_fee
+  def test_entry_fee_returns_guests_remaining_money
     @room.entry_fee(@guest1.money)
     assert_equal(15, @room.entry_fee(@guest1.money))
+  end
+
+  def test_money_has_been_removed
+    @room.remove_money(@guest1)
+    assert_equal(@guest1.money, 15)
   end
 
 end
