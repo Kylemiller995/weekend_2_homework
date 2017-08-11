@@ -6,9 +6,9 @@ require_relative('../song.rb')
 class RoomSpec < MiniTest::Test
 
   def setup()
-    @room = Room.new(20, 4)
-    @guest1 = Guest.new('Kyle Miller')
-    @guest2 = Guest.new('Michael Leadley')
+    @room = Room.new(20, 2, 5)
+    @guest1 = Guest.new('Kyle Miller', 20)
+    @guest2 = Guest.new('Michael Leadley', 150)
     @song = Song.new('song title', 'artist')
   end
 
@@ -29,5 +29,18 @@ class RoomSpec < MiniTest::Test
     assert_equal(@room.songs, ['song title'])
   end
 
+  def test_capacity
+    counter = 0
+    while counter < 2
+      @room.check_in(@guest1)
+      counter += 1
+    end
+    assert_equal("room is full", @room.check_in(@guest2) )
+  end
+
+  def test_entry_fee
+    @room.entry_fee(@guest1.money)
+    assert_equal(15, @room.entry_fee(@guest1.money))
+  end
 
 end

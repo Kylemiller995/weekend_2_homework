@@ -1,27 +1,23 @@
 class Room
 
-  attr_accessor(:number, :capacity, :guests, :songs)
+  attr_accessor(:number, :capacity, :guests, :songs, :entry_fee)
 
 
-  def initialize(number, capacity)
+  def initialize(number, capacity, entry_fee)
     @number = number
     @capacity = capacity
+    @entry_fee = entry_fee
     @guests = []
     @songs = []
   end
 
   def check_in(guest)
-    @guests << guest.name
+    guest_number = @guests.size
+    if  @guests.size < @capacity
+      @guests << guest.name
+    end
+    return "room is full"
   end
-
-  # def check_out(guest)
-  #   guest_name = guest.name
-  #   for person in @guests
-  #     if person == guest_name
-  #       @guests.pop(person)
-  #     end
-  #   end
-  # end
 
   def check_out(guest)
     for person in @guests
@@ -35,20 +31,12 @@ class Room
     @songs << song.name
   end
 
-
-
+  def entry_fee(guest_money)
+    if guest_money >= @entry_fee
+      return guest_money -= @entry_fee
+    else
+      return "not enough money"
+    end
+  end
 
 end
-
-
-
-
-#
-# def check_out(name)
-#   for guest in @guests
-#     if guest.name == name
-#       @guests.delete(guest)
-#     end
-#   end
-# end
-#
